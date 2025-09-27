@@ -8,13 +8,17 @@
       font-family: sans-serif; 
       padding:20px; 
       margin:0;
-      background: url("background.jpg") no-repeat center center fixed;
-      background-size: cover;
+      background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
     }
     h1 { 
       text-align:center; 
-      color:#fff; 
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.7); 
+      color:#000;      /* Черный цвет */
+      font-weight: bold; 
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      max-width: 250px;
     }
     input, button { 
       font-size:16px; 
@@ -24,9 +28,9 @@
     .result { 
       margin-top:15px; 
       padding:10px; 
-      background:rgba(255,255,255,0.9); 
+      background:#fff; 
       border-radius:6px; 
-      box-shadow:0 0 8px rgba(0,0,0,0.3);
+      box-shadow:0 0 8px rgba(0,0,0,0.2);
     }
     table { 
       width:100%; 
@@ -37,77 +41,95 @@
       border:1px solid #ddd; 
       padding:6px; 
       text-align:left; 
-      background:#fff; 
+    }
+    th { 
+      background:#f0f0f0;
     }
   </style>
 </head>
 <body>
-  <h1>EA7 Склад одежды</h1>
+  <!-- Логотип -->
+  <img src="ea7logo.jpeg" alt="EA7" class="logo">
+
+  <h1>EA7</h1>
 
   <input type="text" id="searchInput" placeholder="Введите артикул или название">
   <button onclick="search()">Поиск</button>
+  <button onclick="showAll()">Показать всё</button>
 
   <div class="result" id="result"></div>
 
   <script>
     const items = [
-      { article: "ek22a1", name: "Куртка", wardrobe: "Дидар", shelf: "1" },
-      { article: "ek22a2", name: "Брюки", wardrobe: "Дидар", shelf: "2" },
-      { article: "ek22a3", name: "Рубашка", wardrobe: "Дидар", shelf: "3" },
-      { article: "ek22a4", name: "Пальто", wardrobe: "Дидар", shelf: "4" },
-      { article: "ek22a5", name: "Футболка", wardrobe: "Дидар", shelf: "5" },
-      
-      { article: "ek22b1", name: "Пиджак", wardrobe: "Нурхан", shelf: "1" },
-      { article: "ek22b2", name: "Шорты", wardrobe: "Нурхан", shelf: "2" },
-      { article: "ek22b3", name: "Джинсы", wardrobe: "Нурхан", shelf: "3" },
-      { article: "ek22b4", name: "Толстовка", wardrobe: "Нурхан", shelf: "4" },
-      { article: "ek22b5", name: "Свитер", wardrobe: "Нурхан", shelf: "5" },
-      
-      { article: "ek22c1", name: "Жилет", wardrobe: "Асанали", shelf: "1" },
-      { article: "ek22c2", name: "Костюм", wardrobe: "Асанали", shelf: "2" },
-      { article: "ek22c3", name: "Ветровка", wardrobe: "Асанали", shelf: "3" },
-      { article: "ek22c4", name: "Кардиган", wardrobe: "Асанали", shelf: "4" },
-      { article: "ek22c5", name: "Майка", wardrobe: "Асанали", shelf: "5" },
-      
-      { article: "ei21a1", name: "Платье", wardrobe: "Батыр", shelf: "1" },
-      { article: "ei21a2", name: "Юбка", wardrobe: "Батыр", shelf: "2" },
-      { article: "ei21a3", name: "Блузка", wardrobe: "Батыр", shelf: "3" },
-      { article: "ei21a4", name: "Жакет", wardrobe: "Батыр", shelf: "4" },
-      { article: "ei21a5", name: "Топ", wardrobe: "Батыр", shelf: "5" },
-      
-      { article: "ei21b1", name: "Кардиган", wardrobe: "Нурай", shelf: "1" },
-      { article: "ei21b2", name: "Сарафан", wardrobe: "Нурай", shelf: "2" },
-      { article: "ei21b3", name: "Куртка", wardrobe: "Нурай", shelf: "3" },
-      { article: "ei21b4", name: "Брюки", wardrobe: "Нурай", shelf: "4" },
-      { article: "ei21b5", name: "Туника", wardrobe: "Нурай", shelf: "5" },
-      
-      { article: "ei21c1", name: "Футболка", wardrobe: "Асель", shelf: "1" },
-      { article: "ei21c2", name: "Жилет", wardrobe: "Асель", shelf: "2" },
-      { article: "ei21c3", name: "Пальто", wardrobe: "Асель", shelf: "3" },
-      { article: "ei21c4", name: "Рубашка", wardrobe: "Асель", shelf: "4" },
-      { article: "ei21c5", name: "Толстовка", wardrobe: "Асель", shelf: "5" }
+      // Дидар (мужская)
+      { article: "ek22001", name: "Куртка", wardrobe: "Дидар", shelf: "1" },
+      { article: "ek22002", name: "Брюки", wardrobe: "Дидар", shelf: "2" },
+      { article: "ek22003", name: "Рубашка", wardrobe: "Дидар", shelf: "3" },
+      { article: "ek22004", name: "Пальто", wardrobe: "Дидар", shelf: "4" },
+      { article: "ek22005", name: "Футболка", wardrobe: "Дидар", shelf: "5" },
+
+      // Нурхан (мужская)
+      { article: "ek22006", name: "Пиджак", wardrobe: "Нурхан", shelf: "1" },
+      { article: "ek22007", name: "Шорты", wardrobe: "Нурхан", shelf: "2" },
+      { article: "ek22008", name: "Джинсы", wardrobe: "Нурхан", shelf: "3" },
+      { article: "ek22009", name: "Толстовка", wardrobe: "Нурхан", shelf: "4" },
+      { article: "ek22010", name: "Свитер", wardrobe: "Нурхан", shelf: "5" },
+
+      // Асанали (мужская)
+      { article: "ek22011", name: "Жилет", wardrobe: "Асанали", shelf: "1" },
+      { article: "ek22012", name: "Костюм", wardrobe: "Асанали", shelf: "2" },
+      { article: "ek22013", name: "Ветровка", wardrobe: "Асанали", shelf: "3" },
+      { article: "ek22014", name: "Кардиган", wardrobe: "Асанали", shelf: "4" },
+      { article: "ek22015", name: "Майка", wardrobe: "Асанали", shelf: "5" },
+
+      // Батыр (женская)
+      { article: "ei21001", name: "Платье", wardrobe: "Батыр", shelf: "1" },
+      { article: "ei21002", name: "Юбка", wardrobe: "Батыр", shelf: "2" },
+      { article: "ei21003", name: "Блузка", wardrobe: "Батыр", shelf: "3" },
+      { article: "ei21004", name: "Жакет", wardrobe: "Батыр", shelf: "4" },
+      { article: "ei21005", name: "Топ", wardrobe: "Батыр", shelf: "5" },
+
+      // Нурай (женская)
+      { article: "ei21006", name: "Кардиган", wardrobe: "Нурай", shelf: "1" },
+      { article: "ei21007", name: "Сарафан", wardrobe: "Нурай", shelf: "2" },
+      { article: "ei21008", name: "Куртка", wardrobe: "Нурай", shelf: "3" },
+      { article: "ei21009", name: "Брюки", wardrobe: "Нурай", shelf: "4" },
+      { article: "ei21010", name: "Туника", wardrobe: "Нурай", shelf: "5" },
+
+      // Асель (женская)
+      { article: "ei21011", name: "Футболка", wardrobe: "Асель", shelf: "1" },
+      { article: "ei21012", name: "Жилет", wardrobe: "Асель", shelf: "2" },
+      { article: "ei21013", name: "Пальто", wardrobe: "Асель", shelf: "3" },
+      { article: "ei21014", name: "Рубашка", wardrobe: "Асель", shelf: "4" },
+      { article: "ei21015", name: "Блузка", wardrobe: "Асель", shelf: "5" }
     ];
 
     function search() {
       const query = document.getElementById("searchInput").value.toLowerCase();
       const resultDiv = document.getElementById("result");
-      resultDiv.innerHTML = "";
-
-      const found = items.filter(item => 
+      const filtered = items.filter(item => 
         item.article.toLowerCase().includes(query) || 
         item.name.toLowerCase().includes(query)
       );
+      render(filtered);
+    }
 
-      if (found.length > 0) {
-        let table = "<table><tr><th>Артикул</th><th>Название</th><th>Шкаф</th><th>Полка</th></tr>";
-        found.forEach(item => {
-          table += <tr><td>${item.article}</td><td>${item.name}</td><td>${item.wardrobe}</td><td>${item.shelf}</td></tr>;
-        });
-        table += "</table>";
-        resultDiv.innerHTML = table;
-      } else {
+    function showAll() {
+      render(items);
+    }
+
+    function render(list) {
+      const resultDiv = document.getElementById("result");
+      if (list.length === 0) {
         resultDiv.innerHTML = "<p>Ничего не найдено</p>";
+        return;
       }
+      let html = "<table><tr><th>Артикул</th><th>Название</th><th>Шкаф</th><th>Полка</th></tr>";
+      list.forEach(item => {
+        html += <tr><td>${item.article}</td><td>${item.name}</td><td>${item.wardrobe}</td><td>${item.shelf}</td></tr>;
+      });
+      html += "</table>";
+      resultDiv.innerHTML = html;
     }
   </script>
 </body>
