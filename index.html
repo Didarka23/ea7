@@ -15,14 +15,14 @@
 </head>
 <body>
   <h1>📦 Поиск по артикулу</h1>
-  <input id="q" type="search" placeholder="Введите артикул" />
+  <input id="q" type="search" placeholder="Введите артикул или название" />
   <button id="btn">Найти</button>
   <button id="showAll">Показать всё</button>
 
   <div id="out" class="result" style="display:none"></div>
 
 <script>
-  // 🔹 БАЗА ДАННЫХ (встроена прямо в код)
+  // 🔹 БАЗА ДАННЫХ
   const inventory = [
     {article:"ek22001", name:"Куртка чёрная", cabinet:"Дидар", shelf:"1"},
     {article:"ek22002", name:"Джинсы синие", cabinet:"Дидар", shelf:"2"},
@@ -70,11 +70,18 @@
       out.innerHTML = "<b>Артикул не найден</b>";
     } else if(list.length === 1){
       const it = list[0];
-      out.innerHTML = <b>${it.name}</b><br>Шкаф: ${it.cabinet}, Полка: ${it.shelf};
+      out.innerHTML = `<b>${it.article}</b> — ${it.name}<br>
+      🗄️ Шкаф: <b>${it.cabinet}</b><br>
+      📑 Полка: <b>${it.shelf}</b>`;
     } else {
       let html = "<table><tr><th>Артикул</th><th>Название</th><th>Шкаф</th><th>Полка</th></tr>";
       list.forEach(it=>{
-        html += <tr><td>${it.article}</td><td>${it.name}</td><td>${it.cabinet}</td><td>${it.shelf}</td></tr>;
+        html += `<tr>
+          <td>${it.article}</td>
+          <td>${it.name}</td>
+          <td>${it.cabinet}</td>
+          <td>${it.shelf}</td>
+        </tr>`;
       });
       html += "</table>";
       out.innerHTML = html;
