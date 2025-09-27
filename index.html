@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Поиск по артикулу</title>
+  <style>
+    body { font-family: sans-serif; padding:20px; background:#f7f7f7; }
+    h1 { text-align:center; }
+    input, button { font-size:16px; padding:8px; margin:5px; }
+    .result { margin-top:15px; padding:10px; background:#fff; border-radius:6px; box-shadow:0 0 5px rgba(0,0,0,0.1);}
+    table { width:100%; border-collapse:collapse; margin-top:10px;}
+    th,td { border:1px solid #ddd; padding:6px; text-align:left; }
+  </style>
+</head>
+<body>
+  <h1>📦 Поиск по артикулу</h1>
+  <input id="q" type="search" placeholder="Введите артикул" />
+  <button id="btn">Найти</button>
+  <button id="showAll">Показать всё</button>
+
+  <div id="out" class="result" style="display:none"></div>
+
+<script>
+  // 🔹 БАЗА ДАННЫХ (встроена прямо в код)
+  const inventory = [
+    {article:"ek22001", name:"Куртка чёрная", cabinet:"Дидар", shelf:"1"},
+    {article:"ek22002", name:"Джинсы синие", cabinet:"Дидар", shelf:"2"},
+    {article:"ek22003", name:"Свитер серый", cabinet:"Дидар", shelf:"3"},
+    {article:"ek22004", name:"Футболка белая", cabinet:"Дидар", shelf:"4"},
+    {article:"ek22005", name:"Куртка зелёная", cabinet:"Дидар", shelf:"5"},
+
+    {article:"ek22006", name:"Брюки классические", cabinet:"Нурхан", shelf:"1"},
+    {article:"ek22007", name:"Рубашка голубая", cabinet:"Нурхан", shelf:"2"},
+    {article:"ek22008", name:"Шорты спортивные", cabinet:"Нурхан", shelf:"3"},
+    {article:"ek22009", name:"Жилет утеплённый", cabinet:"Нурхан", shelf:"4"},
+    {article:"ek22010", name:"Толстовка чёрная", cabinet:"Нурхан", shelf:"5"},
+
+    {article:"ek22011", name:"Куртка демисезонная", cabinet:"Асанали", shelf:"1"},
+    {article:"ek22012", name:"Джемпер тёплый", cabinet:"Асанали", shelf:"2"},
+    {article:"ek22013", name:"Брюки спортивные", cabinet:"Асанали", shelf:"3"},
+    {article:"ek22014", name:"Майка белая", cabinet:"Асанали", shelf:"4"},
+    {article:"ek22015", name:"Пиджак серый", cabinet:"Асанали", shelf:"5"},
+
+    {article:"ei21001", name:"Платье красное", cabinet:"Батыр", shelf:"1"},
+    {article:"ei21002", name:"Юбка чёрная", cabinet:"Батыр", shelf:"2"},
+    {article:"ei21003", name:"Блузка белая", cabinet:"Батыр", shelf:"3"},
+    {article:"ei21004", name:"Кардиган серый", cabinet:"Батыр", shelf:"4"},
+    {article:"ei21005", name:"Жакет синий", cabinet:"Батыр", shelf:"5"},
+
+    {article:"ei21006", name:"Платье синее", cabinet:"Нурай", shelf:"1"},
+    {article:"ei21007", name:"Юбка зелёная", cabinet:"Нурай", shelf:"2"},
+    {article:"ei21008", name:"Топ розовый", cabinet:"Нурай", shelf:"3"},
+    {article:"ei21009", name:"Сарафан жёлтый", cabinet:"Нурай", shelf:"4"},
+    {article:"ei21010", name:"Кофта чёрная", cabinet:"Нурай", shelf:"5"},
+
+    {article:"ei21011", name:"Платье вечернее", cabinet:"Асель", shelf:"1"},
+    {article:"ei21012", name:"Юбка синяя", cabinet:"Асель", shelf:"2"},
+    {article:"ei21013", name:"Блузка голубая", cabinet:"Асель", shelf:"3"},
+    {article:"ei21014", name:"Кардиган бежевый", cabinet:"Асель", shelf:"4"},
+    {article:"ei21015", name:"Жакет белый", cabinet:"Асель", shelf:"5"}
+  ];
+
+  const out = document.getElementById('out');
+  const q = document.getElementById('q');
+
+  function renderList(list){
+    out.style.display = 'block';
+    if(list.length === 0){
+      out.innerHTML = "<b>Артикул не найден</b>";
+    } else if(list.length === 1){
+      const it = list[0];
+      out.innerHTML = <b>${it.name}</b><br>Шкаф: ${it.cabinet}, Полка: ${it.shelf};
+    } else {
+      let html = "<table><tr><th>Артикул</th><th>Название</th><th>Шкаф</th><th>Полка</th></tr>";
+      list.forEach(it=>{
+        html += <tr><td>${it.article}</td><td>${it.name}</td><td>${it.cabinet}</td><td>${it.shelf}</td></tr>;
+      });
+      html += "</table>";
+      out.innerHTML = html;
+    }
+  }
+
+  function findItem(){
+    const query = q.value.trim().toLowerCase();
+    if(!query){ out.style.display="none"; return; }
+    const exact = inventory.filter(i=>i.article.toLowerCase()===query);
+    if(exact.length){ renderList(exact); return; }
+    const partial = inventory.filter(i=>i.article.toLowerCase().includes(query) || i.name.toLowerCase().includes(query));
+    renderList(partial);
+  }
+
+  document.getElementById('btn').addEventListener('click', findItem);
+  q.addEventListener('keydown', e=>{ if(e.key==="Enter") findItem(); });
+  document.getElementById('showAll').addEventListener('click', ()=>renderList(inventory));
+</script>
+</body>
+</html>
