@@ -15,50 +15,128 @@
 </head>
 <body>
   <h1>📦 Поиск по артикулу</h1>
-  <input id="q" type="search" placeholder="Введите артикул или название" />
+  <input id="q" type="search" placeholder="Введите артикул" />
   <button id="btn">Найти</button>
   <button id="showAll">Показать всё</button>
 
   <div id="out" class="result" style="display:none"></div>
 
 <script>
-  // 🔹 БАЗА ДАННЫХ
+  // 🔹 ОБНОВЛЁННАЯ БАЗА ДАННЫХ
   const inventory = [
-    {article:"ek22001", name:"Куртка чёрная", cabinet:"Дидар", shelf:"1"},
-    {article:"ek22002", name:"Джинсы синие", cabinet:"Дидар", shelf:"2"},
-    {article:"ek22003", name:"Свитер серый", cabinet:"Дидар", shelf:"3"},
-    {article:"ek22004", name:"Футболка белая", cabinet:"Дидар", shelf:"4"},
-    {article:"ek22005", name:"Куртка зелёная", cabinet:"Дидар", shelf:"5"},
+    // Томирис
+    {article:"EI21417", cabinet:"томирис", shelf:"1"},
+    {article:"EI21440", cabinet:"томирис", shelf:"1"},
+    {article:"EI21443", cabinet:"томирис", shelf:"1"},
+    {article:"EI21444", cabinet:"томирис", shelf:"1"},
+    {article:"EI21466", cabinet:"томирис", shelf:"1"},
+    {article:"EI21482", cabinet:"томирис", shelf:"1"},
+    {article:"EI21488", cabinet:"томирис", shelf:"1"},
+    {article:"EI21479", cabinet:"томирис", shelf:"2"},
+    {article:"EI21490", cabinet:"томирис", shelf:"2"},
+    {article:"EI21427", cabinet:"томирис", shelf:"3"},
+    {article:"EI21428", cabinet:"томирис", shelf:"4"},
+    {article:"EI21432", cabinet:"томирис", shelf:"4"},
+    {article:"EI21439", cabinet:"томирис", shelf:"4"},
+    {article:"EI20870", cabinet:"томирис", shelf:"4"},
+    {article:"EI21478", cabinet:"томирис", shelf:"4"},
+    {article:"EI21480", cabinet:"томирис", shelf:"4"},
+    {article:"EI21481", cabinet:"томирис", shelf:"4"},
+    {article:"EI21486", cabinet:"томирис", shelf:"4"},
+    {article:"EI21487", cabinet:"томирис", shelf:"4"},
+    {article:"EI21448", cabinet:"томирис", shelf:"5"},
+    {article:"EI21450", cabinet:"томирис", shelf:"5"},
+    {article:"EI21451", cabinet:"томирис", shelf:"5"},
+    {article:"EI21452", cabinet:"томирис", shelf:"5"},
+    {article:"EI21477", cabinet:"томирис", shelf:"5"},
+    {article:"EI21489", cabinet:"томирис", shelf:"5"},
+    {article:"EI21434", cabinet:"томирис", shelf:"6"},
+    {article:"EI21452", cabinet:"томирис", shelf:"6"},
+    {article:"EI21483", cabinet:"томирис", shelf:"6"},
+    {article:"EI21420", cabinet:"томирис", shelf:"7"},
+    {article:"EI21425", cabinet:"томирис", shelf:"7"},
+    {article:"EI21470", cabinet:"томирис", shelf:"7"},
 
-    {article:"ek22006", name:"Брюки классические", cabinet:"Нурхан", shelf:"1"},
-    {article:"ek22007", name:"Рубашка голубая", cabinet:"Нурхан", shelf:"2"},
-    {article:"ek22008", name:"Шорты спортивные", cabinet:"Нурхан", shelf:"3"},
-    {article:"ek22009", name:"Жилет утеплённый", cabinet:"Нурхан", shelf:"4"},
-    {article:"ek22010", name:"Толстовка чёрная", cabinet:"Нурхан", shelf:"5"},
+    // Максат
+    {article:"El21446", cabinet:"максат", shelf:"1"},
+    {article:"El21468", cabinet:"максат", shelf:"2"},
+    {article:"El21445", cabinet:"максат", shelf:"2"},
+    {article:"El21453", cabinet:"максат", shelf:"3"},
+    {article:"El21454", cabinet:"максат", shelf:"3"},
+    {article:"El21467", cabinet:"максат", shelf:"4"},
+    {article:"El21498", cabinet:"максат", shelf:"4"},
+    {article:"El21429", cabinet:"максат", shelf:"4"},
+    {article:"El21418", cabinet:"максат", shelf:"4"},
+    {article:"El21419", cabinet:"максат", shelf:"4"},
+    {article:"El21441", cabinet:"максат", shelf:"5"},
+    {article:"El21472", cabinet:"максат", shelf:"6"},
+    {article:"El21430", cabinet:"максат", shelf:"7"},
+    {article:"El21431", cabinet:"максат", shelf:"7"},
+    {article:"El21435", cabinet:"максат", shelf:"8"},
+    {article:"El21433", cabinet:"максат", shelf:"8"},
 
-    {article:"ek22011", name:"Куртка демисезонная", cabinet:"Асанали", shelf:"1"},
-    {article:"ek22012", name:"Джемпер тёплый", cabinet:"Асанали", shelf:"2"},
-    {article:"ek22013", name:"Брюки спортивные", cabinet:"Асанали", shelf:"3"},
-    {article:"ek22014", name:"Майка белая", cabinet:"Асанали", shelf:"4"},
-    {article:"ek22015", name:"Пиджак серый", cabinet:"Асанали", shelf:"5"},
+    // Асанали
+    {article:"ek21897", cabinet:"асанали", shelf:"1"},
+    {article:"ek22141", cabinet:"асанали", shelf:"1"},
+    {article:"ek22144", cabinet:"асанали", shelf:"2"},
+    {article:"ek22168", cabinet:"асанали", shelf:"2"},
+    {article:"ek22169", cabinet:"асанали", shelf:"2"},
+    {article:"ek22114", cabinet:"асанали", shelf:"2"},
+    {article:"ek22158", cabinet:"асанали", shelf:"2"},
+    {article:"ek21384", cabinet:"асанали", shelf:"3"},
+    {article:"ek22178", cabinet:"асанали", shelf:"3"},
+    {article:"ek21675", cabinet:"асанали", shelf:"3"},
+    {article:"ek22161", cabinet:"асанали", shelf:"3"},
+    {article:"ek22150", cabinet:"асанали", shelf:"3"},
+    {article:"ek22173", cabinet:"асанали", shelf:"3"},
+    {article:"ek22179", cabinet:"асанали", shelf:"3"},
+    {article:"ek22180", cabinet:"асанали", shelf:"3"},
+    {article:"ek22184", cabinet:"асанали", shelf:"3"},
+    {article:"ek22181", cabinet:"асанали", shelf:"4"},
+    {article:"ek22182", cabinet:"асанали", shelf:"4"},
+    {article:"ek22183", cabinet:"асанали", shelf:"4"},
+    {article:"ek22139", cabinet:"асанали", shelf:"4"},
+    {article:"ek22106", cabinet:"асанали", shelf:"4"},
+    {article:"ek22137", cabinet:"асанали", shelf:"4"},
+    {article:"ek22160", cabinet:"асанали", shelf:"4"},
+    {article:"ek22117", cabinet:"асанали", shelf:"4"},
+    {article:"ek22170", cabinet:"асанали", shelf:"5"},
+    {article:"ek22171", cabinet:"асанали", shelf:"5"},
+    {article:"ek22172", cabinet:"асанали", shelf:"5"},
+    {article:"ek22078", cabinet:"асанали", shelf:"5"},
+    {article:"ek21896", cabinet:"асанали", shelf:"6"},
+    {article:"ek21374", cabinet:"асанали", shelf:"6"},
 
-    {article:"ei21001", name:"Платье красное", cabinet:"Батыр", shelf:"1"},
-    {article:"ei21002", name:"Юбка чёрная", cabinet:"Батыр", shelf:"2"},
-    {article:"ei21003", name:"Блузка белая", cabinet:"Батыр", shelf:"3"},
-    {article:"ei21004", name:"Кардиган серый", cabinet:"Батыр", shelf:"4"},
-    {article:"ei21005", name:"Жакет синий", cabinet:"Батыр", shelf:"5"},
+    // Нурхан
+    {article:"ek22113", cabinet:"нурхан", shelf:"1"},
+    {article:"ek22102", cabinet:"нурхан", shelf:"1"},
+    {article:"ek22157", cabinet:"нурхан", shelf:"2"},
+    {article:"ek22121", cabinet:"нурхан", shelf:"2"},
+    {article:"ek21453", cabinet:"нурхан", shelf:"3"},
+    {article:"ek21454", cabinet:"нурхан", shelf:"3"},
+    {article:"ek22152", cabinet:"нурхан", shelf:"3"},
+    {article:"ek22153", cabinet:"нурхан", shelf:"3"},
+    {article:"ek22143", cabinet:"нурхан", shelf:"3"},
+    {article:"ek22175", cabinet:"нурхан", shelf:"3"},
+    {article:"ek21422", cabinet:"нурхан", shelf:"4"},
+    {article:"ek22108", cabinet:"нурхан", shelf:"5"},
+    {article:"ek22163", cabinet:"нурхан", shelf:"5"},
 
-    {article:"ei21006", name:"Платье синее", cabinet:"Нурай", shelf:"1"},
-    {article:"ei21007", name:"Юбка зелёная", cabinet:"Нурай", shelf:"2"},
-    {article:"ei21008", name:"Топ розовый", cabinet:"Нурай", shelf:"3"},
-    {article:"ei21009", name:"Сарафан жёлтый", cabinet:"Нурай", shelf:"4"},
-    {article:"ei21010", name:"Кофта чёрная", cabinet:"Нурай", shelf:"5"},
-
-    {article:"ei21011", name:"Платье вечернее", cabinet:"Асель", shelf:"1"},
-    {article:"ei21012", name:"Юбка синяя", cabinet:"Асель", shelf:"2"},
-    {article:"ei21013", name:"Блузка голубая", cabinet:"Асель", shelf:"3"},
-    {article:"ei21014", name:"Кардиган бежевый", cabinet:"Асель", shelf:"4"},
-    {article:"ei21015", name:"Жакет белый", cabinet:"Асель", shelf:"5"}
+    // Нурай
+    {article:"ek22107", cabinet:"нурай", shelf:"2"},
+    {article:"ek22146", cabinet:"нурай", shelf:"2"},
+    {article:"ek22147", cabinet:"нурай", shelf:"2"},
+    {article:"ek22140", cabinet:"нурай", shelf:"3"},
+    {article:"ek22109", cabinet:"нурай", shelf:"3"},
+    {article:"ek22103", cabinet:"нурай", shelf:"3"},
+    {article:"ek22148", cabinet:"нурай", shelf:"3"},
+    {article:"ek22177", cabinet:"нурай", shelf:"4"},
+    {article:"ek22165", cabinet:"нурай", shelf:"4"},
+    {article:"ek22105", cabinet:"нурай", shelf:"4"},
+    {article:"ek22112", cabinet:"нурай", shelf:"4"},
+    {article:"ek22166", cabinet:"нурай", shelf:"4"},
+    {article:"ek21389", cabinet:"нурай", shelf:"5"},
+    {article:"ek22095", cabinet:"нурай", shelf:"6"},
   ];
 
   const out = document.getElementById('out');
@@ -70,15 +148,14 @@
       out.innerHTML = "<b>Артикул не найден</b>";
     } else if(list.length === 1){
       const it = list[0];
-      out.innerHTML = `<b>${it.article}</b> — ${it.name}<br>
+      out.innerHTML = `<b>${it.article}</b><br>
       🗄️ Шкаф: <b>${it.cabinet}</b><br>
       📑 Полка: <b>${it.shelf}</b>`;
     } else {
-      let html = "<table><tr><th>Артикул</th><th>Название</th><th>Шкаф</th><th>Полка</th></tr>";
+      let html = "<table><tr><th>Артикул</th><th>Шкаф</th><th>Полка</th></tr>";
       list.forEach(it=>{
         html += `<tr>
           <td>${it.article}</td>
-          <td>${it.name}</td>
           <td>${it.cabinet}</td>
           <td>${it.shelf}</td>
         </tr>`;
@@ -93,7 +170,7 @@
     if(!query){ out.style.display="none"; return; }
     const exact = inventory.filter(i=>i.article.toLowerCase()===query);
     if(exact.length){ renderList(exact); return; }
-    const partial = inventory.filter(i=>i.article.toLowerCase().includes(query) || i.name.toLowerCase().includes(query));
+    const partial = inventory.filter(i=>i.article.toLowerCase().includes(query));
     renderList(partial);
   }
 
